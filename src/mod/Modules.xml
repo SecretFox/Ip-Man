@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<Root>
+  <Module  name = "IPMan"
+    movie       = "IPMan\IPMan.swf"
+    flags       = ""
+    depth_layer = "Top"
+    sub_depth   = "2"
+    variable    = "IPMan"
+    criteria    = "IPMan &amp;&amp; (guimode &amp; (GUIMODEFLAGS_INPLAY | GUIMODEFLAGS_ENABLEALLGUI))"
+  />
+</Root>
