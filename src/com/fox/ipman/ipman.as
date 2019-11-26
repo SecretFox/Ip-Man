@@ -25,10 +25,9 @@ class com.fox.ipman.ipman{
 					var Format:TextFormat = new TextFormat("_StandardFont", 8,0xFFFFFF,false);
 					var IPField:TextField = this.m_HealthBar.createTextField("IPField", this.m_HealthBar.getNextHighestDepth(), this.m_HealthBar.m_HealthBar._x, this.m_HealthBar.m_Bar._height,20,20);
 					IPField.autoSize = true;
-					IPField.filters = [new DropShadowFilter(4, 45, 0, 1, 0, 0, 255, 2, false, false, false)];
+					IPField.filters = [new DropShadowFilter(20, 45, 0, 1, 0, 0, 107, 2, false, false, false)];
 					IPField.setNewTextFormat(Format);
 					IPField.setTextFormat(Format);
-					this.m_HealthBar.IPField.text = "IP " + this.m_Character.GetStat(2000607);
 				}
 				this.m_HealthBar.IPField.text = "IP "+this.m_Character.GetStat(2000607);
 			}
