@@ -1,19 +1,16 @@
 import flash.filters.DropShadowFilter;
 import mx.utils.Delegate;
-class com.fox.ipman.ipman{
-	private var NametagController:MovieClip;
-	
+class com.fox.ipman.ipman{	
 	public static function main(swfRoot:MovieClip):Void{
 		var s_app = new ipman(swfRoot);
 		swfRoot.onLoad = function () {s_app.Hook()};
 	}
 	public function ipman() { }
 	public function Hook(){
-		NametagController = _root.nametagcontroller;
-		if (_global.com.fox.IPHook){
+		if (_global.com.Components.Nametag.prototype.InitIP){
 			return
 		}
-		if (!_global.com.Components.Nametag.prototype.SetAsTarget){
+		if (!_global.com.Components.Nametag.prototype.SetAsTarget || !_global.com.Components.Nametag.prototype.SlotDynelStatChanged){
 			setTimeout(Delegate.create(this, Hook), 500);
 			return
 		}
@@ -74,11 +71,9 @@ class com.fox.ipman.ipman{
 		_global.com.Components.Nametag.prototype.SlotDynelStatChanged = f;
 		
 	// Update already created nametags
-		for (var i in NametagController.m_NametagArray){
-			var tag = NametagController.m_NametagArray[i];
+		for (var i in _root.nametagcontroller.m_NametagArray){
+			var tag = _root.nametagcontroller.m_NametagArray[i];
 			tag.InitIP();
 		}
-		
-		_global.com.fox.IPHook = true;
 	}
 }
