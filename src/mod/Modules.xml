@@ -2,10 +2,11 @@
 <Root>
   <Module  name = "IPMan"
     movie       = "IPMan\IPMan.swf"
-    flags       = ""
+    flags       = "GMF_CFG_STORE_USER_CONFIG"
     depth_layer = "Top"
     sub_depth   = "2"
     variable    = "IPMan"
     criteria    = "IPMan &amp;&amp; (guimode &amp; (GUIMODEFLAGS_INPLAY | GUIMODEFLAGS_ENABLEALLGUI))"
+	config_name = "IPMan_Cfg"
   />
 </Root>

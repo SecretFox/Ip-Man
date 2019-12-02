@@ -1,24 +1,45 @@
 import com.GameInterface.DistributedValue;
+import com.Utils.Archive;
 import flash.filters.DropShadowFilter;
 import mx.utils.Delegate;
 class com.fox.ipman.ipman{
 	private var CharSheet:DistributedValue;
+	static var dTargetOnly:DistributedValue;
 	public static function main(swfRoot:MovieClip):Void{
 		var s_app = new ipman(swfRoot);
 		swfRoot.onLoad = function () {s_app.Load()};
 		swfRoot.onUnload = function () {s_app.Unload()};
+		swfRoot.OnModuleActivated = function(config:Archive) { s_app.Activate(config); };
+		swfRoot.OnModuleDeactivated = function() { return s_app.Deactivate(); };
+		
 	}
 	public function ipman() {
 		CharSheet = DistributedValue.Create("character_sheet");
+		dTargetOnly = DistributedValue.Create("IP_OnlyTargeted");
 	}
 	private function Load(){
-		
 		CharSheet.SignalChanged.Connect(AddMaxIP, this);
+		dTargetOnly.SignalChanged.Connect(UpdateIPSettings, this);
 		AddMaxIP(CharSheet);
 		Hook();
 	}
 	private function Unload(){
 		CharSheet.SignalChanged.Disconnect(AddMaxIP, this);
+		dTargetOnly.SignalChanged.Disconnect(UpdateIPSettings, this);
+	}
+	private function Activate(config:Archive){
+		dTargetOnly.SetValue(config.FindEntry("targetOnly",false));
+	}
+	private function Deactivate(){
+		var archive:Archive = new Archive();
+		archive.AddEntry("targetOnly", dTargetOnly.GetValue());
+		return archive
+	}
+	private function UpdateIPSettings(){
+		for (var i in _root.nametagcontroller.m_NametagArray){
+			var tag = _root.nametagcontroller.m_NametagArray[i];
+			tag.InitIP();
+		}
 	}
 	private function AddMaxIP(dv:DistributedValue){
 		if (dv.GetValue()){
@@ -47,7 +68,6 @@ class com.fox.ipman.ipman{
 			skillList.m_Character.SignalStatChanged.Connect(skillList.SlotStatChanged, skillList);
 			skillList.SlotStatChanged(_global.Enums.Stat.e_ZebraFactor);
 		}
-		
 	}
 	public function Hook(){
 		if (_global.com.Components.Nametag.prototype.InitIP){
@@ -63,7 +83,7 @@ class com.fox.ipman.ipman{
 			if (this.IPPointer){
 				this.IPPointer.removeTextField();
 			}
-			if (!this.m_IsNPC){
+			if (!this.m_IsNPC && (!ipman.dTargetOnly.GetValue() || this.m_IsTarget)){
 				if (this.m_HealthBar){
 					var Format:TextFormat = new TextFormat("_StandardFont", 8,0xFFFFFF,false);
 					var field:TextField = this.m_HealthBar.createTextField("m_IPText", this.m_HealthBar.getNextHighestDepth(), this.m_HealthBar.m_Bar._x, this.m_HealthBar.m_Bar._height,20,20);
