@@ -104,7 +104,7 @@ class com.fox.ipman.ipman{
 				var IP = this.m_Character.GetStat(2000607);
 				var max = this.m_Character.GetStat(2000767);
 				var text = "IP " + IP;
-				if (IP != max){
+				if (IP < max){
 					text += " (" + max + ")";
 				}
 				this.IPPointer.text = text;
@@ -132,11 +132,11 @@ class com.fox.ipman.ipman{
 	// Stats changed	
 		f = function(statID){
 			arguments.callee.base.apply(this, arguments);
-			if (statID == 2000607){
+			if (statID == 2000607 || statID == 2000767){
 				var IP = this.m_Character.GetStat(2000607);
 				var max = this.m_Character.GetStat(2000767);
 				var text = "IP " + IP;
-				if (IP != max){
+				if (IP < max){
 					text += " (" + max + ")";
 				}
 				this.IPPointer.text = text;
