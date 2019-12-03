@@ -54,10 +54,10 @@ class com.fox.ipman.ipman{
 			skillList._SlotStatChanged = skillList.SlotStatChanged;
 			skillList.SlotStatChanged = function(stat){
 				this._SlotStatChanged(stat);
-				if (stat == _global.Enums.Stat.e_ZebraFactor){
+				if (stat == _global.Enums.Stat.e_ZebraFactor || stat == 2000767){
 					var current = this.m_ItemPowerValue.text;
 					var max = string(this.m_Character.GetStat(2000767));
-					if (current != max){
+					if (current < max){
 						this.m_ItemPowerValue.text = current + " (" + max + ")";
 						this.m_ItemPowerValue.autoSize = "right";
 						this.m_ItemPowerValue.wordWrap = false;
